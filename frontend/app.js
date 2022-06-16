@@ -3,8 +3,10 @@ let app = new Vue({
     data:{
         test:"success",
         selectedChat:-1,
+        username:"new user",
         chats:[],
         selectedChatMessage:[],
+        message:"",
         
     },
     methods:{
@@ -14,8 +16,9 @@ let app = new Vue({
         // addMessage: function(index, message){
         //     this.chats[index].ChatHistory.push(message);
         // },
-        addMessage: function( message){
-            this.chats[this.selectedChat].ChatHistory.push(message);
+        addMessage: function( ){
+            this.chats[this.selectedChat].ChatHistory.push({Message:this.message, Sender:this.username});
+            this.message = ""
         },
 
         changeChat:function(index){

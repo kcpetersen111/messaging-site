@@ -11,8 +11,9 @@
     <div id="app" v-cloak>
 
         <div id="left">
-            <button @click="addChat()">Add a chat</button>
-            <div v-for="(chat, index) in chats" @click="changeChat(index)" >
+            <input placeholder="Set username" v-model="username" >
+            <div @click="addChat()" id="addChat">Add a chat</div>
+            <div v-for="(chat, index) in chats" @click="changeChat(index)" class="conversation">
                 {{chat.Name}}
                 <!-- <button @click="addMessage(index,'tester')">add message</button> -->
                 <!-- {{selectedChat}} -->
@@ -20,10 +21,18 @@
         </div>
 
         <div id="right">
-            <div  v-for="message in selectedChatMessage" class="chatMessages">
-                {{message}}
+            <div>
+                <div  v-for="(message,index) in selectedChatMessage" class="chatMessages">
+                    <div class="messageSender" v-if="(index == 0) || (message.Sender!=selectedChatMessage[index-1].Sender)">{{message.Sender}}</div> 
+                    <div class="messageMessage">{{message.Message}}</div>
+                </div>
             </div>
-            <button @click="addMessage('tester')" v-if="selectedChat>=0">add message</button>
+            <div id="messageBar" v-if="selectedChat>=0">
+                <input v-model="message" placeholder="Send a Message" v-on:keydown.enter="addMessage()">
+                <div @click="addMessage()" >Send</div>
+
+            </div>
+
 
         </div>
 
