@@ -7,11 +7,22 @@ let app = new Vue({
         chats:[],
         selectedChatMessage:[],
         message:"",
+        showChatSearch:false,
+        chatSearchUser:"",
+        addUserToChat:"",
+        showUserSearch:-1,
         
     },
     methods:{
         addChat:function(){
-            this.chats.push({Name:"test",ChatHistory:[]});
+            this.showChatSearch = true;
+            // this.chats.push({Name:"test",ChatHistory:[]});
+        },
+        createChat:function(){
+            this.chats.push({Name:this.chatSearchUser,ChatHistory:[], Participants:[this.username]});
+            this.showChatSearch = false;
+            this.chatSearchUser = "";
+
         },
         // addMessage: function(index, message){
         //     this.chats[index].ChatHistory.push(message);
@@ -24,7 +35,15 @@ let app = new Vue({
         changeChat:function(index){
             this.selectedChatMessage = this.chats[index].ChatHistory;
             this.selectedChat = index;
-        }
+        },
+        addParticipant: function(index){
+            this.chats[index].Participants.push(this.addUserToChat);
+            this.chats[index].ChatHistory.push({Message:`${this.addUserToChat} has joined the chat`,
+             Sender:""});
+            this.addUserToChat = "";
+            this.showUserSearch = -1;
+
+        } 
 
     }
 })

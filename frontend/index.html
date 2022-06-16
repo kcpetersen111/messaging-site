@@ -12,9 +12,23 @@
 
         <div id="left">
             <input placeholder="Set username" v-model="username" >
-            <div @click="addChat()" id="addChat">Add a chat</div>
-            <div v-for="(chat, index) in chats" @click="changeChat(index)" class="conversation">
+            <div @click="addChat()" id="addChat">Add a chat
+                <input v-if="showChatSearch"
+                 v-model="chatSearchUser"
+                 @keydown.enter="createChat()">
+            </div>
+
+            <div v-for="(chat, index) in chats"
+             @click="changeChat(index)"
+             class="conversation" 
+             v-if="chat.Participants.includes(username)"
+             @dblclick="showUserSearch = index">    
                 {{chat.Name}}
+                <input placeholder="Add Participant"
+                 v-model="addUserToChat"
+                  v-if="showUserSearch == index"
+                  @keydown.enter="addParticipant(index)">
+
                 <!-- <button @click="addMessage(index,'tester')">add message</button> -->
                 <!-- {{selectedChat}} -->
             </div>
