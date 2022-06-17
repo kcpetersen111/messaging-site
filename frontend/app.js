@@ -11,6 +11,7 @@ let app = new Vue({
         chatSearchUser:"",
         addUserToChat:"",
         showUserSearch:-1,
+        connection:null,
         
     },
     methods:{
@@ -45,5 +46,14 @@ let app = new Vue({
 
         } 
 
+    },
+    created: function(){
+        console.log("opening a websocket");
+        this.connection = new WebSocket("ws://localhost:8080");
+
+        this.connection.onopen = (event) =>{
+            console.log("websocket opened successfully");
+            console.log(event);
+        }
     }
 })
